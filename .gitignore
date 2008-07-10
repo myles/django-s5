@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+*~
+*.db
+.*.swp
+*.tmproj
+.svn/
+.DS_Store
