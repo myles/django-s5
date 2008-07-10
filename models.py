@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.contrib.auth.models import User
+from django.conf import settings
 
 class Presentation(models.Model):
 	DEFAULT_VIEW_CHOICE = (
@@ -13,17 +14,6 @@ class Presentation(models.Model):
 		('visible', 'Visible'),
 		('hidden', 'Hidden')
 	)
-	THEME_CHOICE = (
-		('blue', 'Blue'),
-		('default', 'Default'),
-		('dokuwiki', 'DokuWiki'),
-		('flower', 'Flower'),
-		('i18n', 'i18n'),
-		('pixel', 'Pixel'),
-		('yatil', 'Yatil'),
-		('myles', 'Myles')
-	)
-	
 	title				= models.CharField(_('title'), max_length=200)
 	slug				= models.CharField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
 	author				= models.ForeignKey(User, blank=True, null=True)
@@ -32,7 +22,8 @@ class Presentation(models.Model):
 	company_url			= models.URLField(_('company_url'), blank=True, verify_exists=True)
 	default_view		= models.CharField(_('default view'), choices=DEFAULT_VIEW_CHOICE, default="slideshow", max_length=9)
 	control_vis			= models.CharField(_('controls visible'), choices=CONTROL_VIS_CHOICE, default="hidden", max_length=7)
-	theme				= models.CharField(_('theme'), choices=THEME_CHOICE, default='myles', max_length=8)
+	# theme				= models.CharField(_('theme'), choices=THEME_CHOICE, default='myles', max_length=8)
+	theme				= models.FilePathField(match="slides.css", path=settings.MEDIA_ROOT + "/s5", recursive=True)
 	header				= models.TextField(_('header'), blank=True, null=True, help_text="Use raw HTML.")
 	footer				= models.TextField(_('footer'), blank=True, null=True, help_text="Use raw HTML.")
 	topleft				= models.TextField(_('top left'), blank=True, null=True, help_text="Use raw HTML.")
@@ -68,6 +59,10 @@ class Presentation(models.Model):
 		return ('presentation_detail', None, {
 			'slug'	: self.slug,
 		})
+	
+	@property
+	def get_theme_url(self):
+		return '/' + str(self.theme).split(settings.MEDIA_ROOT)[-1]
 
 def get_next_slide_weight(presentation):
 	try:

@@ -6,7 +6,7 @@
 	<title>{{ object.title }}</title>
 	<meta name="defaultView" content="{{ object.default_view }}" />
 	<meta name="controlVis" content="hidden" />
-	<meta name="generator" content="Django S5" />
+	<meta name="generator" content="Django-S5" />
 	<meta name="version" content="S5 1.1" />
 	<meta name="presdate" content="{{ object.presentation_date }}" />
 	{% if object.author %}
@@ -15,7 +15,7 @@
 	{% if object.company %}
 		<meta name="company" content="{{ object.company }}" />
 	{% endif %}
-	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/{{ object.theme }}/slides.css" type="text/css" media="projection" id="slideProj" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}{{ object.get_theme_url }}" type="text/css" media="projection" id="slideProj" />
 	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/outline.css" type="text/css" media="print" id="outlineStyle" />
 	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/print.css" type="text/css" media="print" id="slidePrint" />
 	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/opera.css" type="text/css" media="projection" id="operaFix" />
