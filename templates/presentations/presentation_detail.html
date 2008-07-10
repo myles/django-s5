@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>{{ object.title }}</title>
+	<meta name="defaultView" content="{{ object.default_view }}" />
+	<meta name="controlVis" content="hidden" />
+	<meta name="generator" content="Django S5" />
+	<meta name="version" content="S5 1.1" />
+	<meta name="presdate" content="{{ object.presentation_date }}" />
+	{% if object.author %}
+		<meta name="author" content="{{ object.author.first_name }} {{ object.author.last_name }}" />
+	{% endif %}
+	{% if object.company %}
+		<meta name="company" content="{{ object.company }}" />
+	{% endif %}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/{{ object.theme }}/slides.css" type="text/css" media="projection" id="slideProj" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/outline.css" type="text/css" media="print" id="outlineStyle" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/print.css" type="text/css" media="print" id="slidePrint" />
+	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/opera.css" type="text/css" media="projection" id="operaFix" />
+	<script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}s5/default/slides.js"></script>
+</head>
+<body>
+	<div class="layout">
+		<div id="controls"></div>
+		<div id="currentSlide"></div>
+		<div id="header">{{ object.header|safe }}</div>
+		<div id="footer">{{ object.footer|safe }}</div>
+		{% if object.topleft %}
+			<div class="topleft">{{ object.topleft|safe }}</div>
+		{% endif %}
+		{% if object.toright %}
+			<div class="topright">{{ object.topright|safe }}</div>
+		{% endif %}
+		{% if object.bottomleft %}
+			<div class="bottomleft">{{ object.bottomleft|safe }}</div>
+		{% endif %}
+		{% if object.bottomright %}
+			<div class="bottomright">{{ object.bottomright|safe }}</div>
+		{% endif %}
+	</div>
+	<div class="presentation">
+		<div class="slide">
+			<h1>{{ object.title }}</h1>
+			{% if object.author %}
+				<h3>{{ object.author.first_name }} {{ object.author.last_name }}</h3>
+			{% endif %}
+			{% if object.company_url or object.company %}
+				<h4>{% if object.company_url %}<a href="{{ object.company_url }}">{{ object.company }}</a>{% else %}{{ object.company }}{% endif %}</h4>
+			{% endif %}
+		</div>
+		{% load markup %}
+		{% for slide in slides %}
+			<div class="slide" id="slide{{ slide.weigth }}">
+				{% if slide.title %}
+					<h1>{{ slide.title }}</h1>
+				{% endif %}
+				<div class="slidecontent">{{ slide.content|textile }}</div>
+				{% if slide.handout %}
+					<div class="handout">{{ slide.handout|textile }}</div>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</body>
+</html>

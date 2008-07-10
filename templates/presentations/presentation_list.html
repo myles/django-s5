@@ -1,0 +1,9 @@
+{% extends "presentations/base_presentation.html" %}
+
+{% block content %}
+	<ul class="link_list">
+		{% for object in presentations %}
+			<li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}
