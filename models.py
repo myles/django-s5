@@ -22,7 +22,6 @@ class Presentation(models.Model):
 	company_url			= models.URLField(_('company_url'), blank=True, verify_exists=True)
 	default_view		= models.CharField(_('default view'), choices=DEFAULT_VIEW_CHOICE, default="slideshow", max_length=9)
 	control_vis			= models.CharField(_('controls visible'), choices=CONTROL_VIS_CHOICE, default="hidden", max_length=7)
-	# theme				= models.CharField(_('theme'), choices=THEME_CHOICE, default='myles', max_length=8)
 	theme				= models.FilePathField(match="slides.css", path=settings.MEDIA_ROOT + "/s5", recursive=True)
 	header				= models.TextField(_('header'), blank=True, null=True, help_text="Use raw HTML.")
 	footer				= models.TextField(_('footer'), blank=True, null=True, help_text="Use raw HTML.")
