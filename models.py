@@ -5,6 +5,33 @@ from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.conf import settings
 
+from places.models import Place
+
+class Topic(models.Model):
+	title			= models.CharField(_('title'), max_length=200)
+	slug			= models.SlugField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
+	
+	class Meta:
+		verbose_name		= _('topic')
+		verbose_name_plural	= _('topics')
+		db_table			= 'presentation_topics'
+	
+	def __unicode__(self):
+		return u"%s" % self.title
+	
+	class Admin:
+		pass
+	
+	@property
+	def presentation_count(self):
+		return u"%s" % self.presentation_set.all().count()
+	
+	@permalink
+	def get_absolute_url(self):
+		return ('topic_detail', None, {
+			'slug'	: self.slug,
+		})
+
 class Presentation(models.Model):
 	DEFAULT_VIEW_CHOICE = (
 		('slideshow', 'Slideshow'),
@@ -15,11 +42,13 @@ class Presentation(models.Model):
 		('hidden', 'Hidden')
 	)
 	title				= models.CharField(_('title'), max_length=200)
-	slug				= models.CharField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
+	slug				= models.SlugField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
+	topic				= models.ForeignKey(Topic)
 	author				= models.ForeignKey(User, blank=True, null=True)
 	presentation_date	= models.DateField(_('presentation date'))
 	company				= models.CharField(_('company'), blank=True, null=True, max_length=200)
 	company_url			= models.URLField(_('company_url'), blank=True, verify_exists=True)
+	place				= models.ForeignKey(Place, blank=True, null=True)
 	default_view		= models.CharField(_('default view'), choices=DEFAULT_VIEW_CHOICE, default="slideshow", max_length=9)
 	control_vis			= models.CharField(_('controls visible'), choices=CONTROL_VIS_CHOICE, default="hidden", max_length=7)
 	theme				= models.FilePathField(match="slides.css", path=settings.MEDIA_ROOT + "/s5", recursive=True)
@@ -37,12 +66,12 @@ class Presentation(models.Model):
 		ordering			= ('-presentation_date',)
 	
 	class Admin:
-		list_display	= ('title', 'author', 'presentation_date',)
+		list_display	= ('title', 'author', 'presentation_date', 'topic',)
 		list_filter		= ('author',)
 		ordering		= ('-presentation_date',)
 		fields			= (
 			(None, {
-				'fields': (('title', 'slug'), ('author', 'presentation_date'), 'header', 'footer', ('company', 'company_url'), ('default_view', 'control_vis', 'theme'))
+				'fields': (('title', 'slug'), ('author', 'presentation_date'), 'header', 'footer', ('company', 'company_url'), ('default_view', 'control_vis', 'theme'), ('topic', 'place'))
 			}),
 			('Optional', {
 				'classes': 'collapse',
@@ -57,6 +86,7 @@ class Presentation(models.Model):
 	def get_absolute_url(self):
 		return ('presentation_detail', None, {
 			'slug'	: self.slug,
+			'topic'	: self.topic.slug,
 		})
 	
 	@property

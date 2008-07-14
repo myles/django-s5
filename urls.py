@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-	url(r'^(?P<slug>[-\w]+)/$',
+	url(r'^(?P<topic>[-\w]+)/(?P<slug>[-\w]+)/$',
 		view	= 'presentations.views.detail',
 		name	= 'presentation_detail',
 	),

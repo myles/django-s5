@@ -9,7 +9,7 @@ def list(request):
 	
 	return render_to_response('presentations/presentation_list.html', { 'presentations': presentations }, context_instance=RequestContext(request))
 
-def detail(request, slug):
+def detail(request, slug, topic):
 	presentation = Presentation.objects.get(slug=slug)
 	slides = presentation.slide_set.all()
 	
