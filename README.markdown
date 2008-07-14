@@ -9,6 +9,7 @@ powered by [S5](http://meyerweb.com/eric/tools/s5/).
 Dependancies
 ------------
 - [Django](http://djangoproject.com/)
+- [Django Basic Places](http://code.google.com/p/django-basic-places/)
 - [S5](http://meyerweb.com/eric/tools/s5/)
 
 Install
