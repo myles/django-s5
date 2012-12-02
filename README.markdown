@@ -9,7 +9,8 @@ powered by [S5](http://meyerweb.com/eric/tools/s5/).
 Dependancies
 ------------
 - [Django](http://djangoproject.com/)
-- [Django Basic Places](http://code.google.com/p/django-basic-places/)
+- [Django Basic Places](https://github.com/nathanborror/django-basic-apps)
+- [Django Tagging](http://code.google.com/p/django-tagging/)
 - [S5](http://meyerweb.com/eric/tools/s5/)
 
 Install

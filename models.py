@@ -5,11 +5,11 @@ from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from places.models import Place
+from basic.places.models import Place
 
 class Topic(models.Model):
 	title			= models.CharField(_('title'), max_length=200)
-	slug			= models.SlugField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
+	slug			= models.SlugField(_('slug'), max_length=100, unique=True)
 	
 	class Meta:
 		verbose_name		= _('topic')
@@ -42,7 +42,7 @@ class Presentation(models.Model):
 		('hidden', 'Hidden')
 	)
 	title				= models.CharField(_('title'), max_length=200)
-	slug				= models.SlugField(_('slug'), max_length=100, prepopulate_from=('title',), unique=True)
+	slug				= models.SlugField(_('slug'), max_length=100, unique=True)
 	topic				= models.ForeignKey(Topic)
 	author				= models.ForeignKey(User, blank=True, null=True)
 	presentation_date	= models.DateField(_('presentation date'))

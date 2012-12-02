@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import *
-
+from views import detail, list
 urlpatterns = patterns('',
 	url(r'^(?P<topic>[-\w]+)/(?P<slug>[-\w]+)/$',
-		view	= 'presentations.views.detail',
+		view	= detail,
 		name	= 'presentation_detail',
 	),
 	url(r'^$',
-		view	= 'presentations.views.list',
+		view	= list,
 		name	= 'presentation_list',
 	),
 )
