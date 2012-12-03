@@ -15,11 +15,11 @@
 	{% if object.company %}
 		<meta name="company" content="{{ object.company }}" />
 	{% endif %}
-	<link rel="stylesheet" href="{{ MEDIA_URL }}{{ object.get_theme_url }}" type="text/css" media="projection" id="slideProj" />
-	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/outline.css" type="text/css" media="print" id="outlineStyle" />
-	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/print.css" type="text/css" media="print" id="slidePrint" />
-	<link rel="stylesheet" href="{{ MEDIA_URL }}s5/default/opera.css" type="text/css" media="projection" id="operaFix" />
-	<script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}s5/default/slides.js"></script>
+	<link rel="stylesheet" href="{{ STATIC_URL }}s5/{{ object.get_theme_url }}" type="text/css" media="projection" id="slideProj" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}s5/ui/default/outline.css" type="text/css" media="print" id="outlineStyle" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}s5/ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}s5/ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+	<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}s5/ui/default/slides.js"></script>
 </head>
 <body>
 	<div class="layout">
